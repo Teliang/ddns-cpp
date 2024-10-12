@@ -30,7 +30,7 @@ std::string read_file(const std::string &path) {
 }
 
 configure read_configure() {
-  std::string path = "etc/ddns-cpp.json";
+  std::string path = "/etc/ddns-cpp.json";
   auto json_conf = nlohmann::json::parse(read_file(path));
   configure conf;
   if (json_conf.find("domain") != json_conf.end()) {
