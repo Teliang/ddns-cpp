@@ -25,6 +25,9 @@ std::string read_file(const std::string &path) {
     s.resize(sb.st_size);
 
     read(fd, s.data(), sb.st_size);
+
+    close(fd);
+
     return s;
   }
 }
