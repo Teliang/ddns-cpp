@@ -52,7 +52,11 @@ std::vector<record> dns_list_records(const configure &conf) {
   for (auto &&json_record : json_records) {
     // abc.example.com -> abcに変える
     std::string host = json_record["host"];
-    host = host.substr(0, host.find("."));
+    if (host == conf.domain) {
+      host = "";
+    } else {
+      host = host.substr(0, host.find("."));
+    }
     vec.push_back({json_record["record_id"], host, json_record["value"]});
   }
   return vec;
@@ -64,7 +68,7 @@ void update_record(configure &conf, record &r, std::string &ip) {
   std::map<std::string, std::string> paramter = {
       {"version", "1"},        {"type", "json"}, {"key", conf.api_key},
       {"domain", conf.domain}, {"rrid", r.id},   {"rrhost", r.host},
-      {"rrvalue", ip},         {"rrttl", "7207"}};
+      {"rrvalue", ip},         {"rrttl", "3600"}};
 
   for (auto &&pair : paramter) {
     path.append(pair.first);
