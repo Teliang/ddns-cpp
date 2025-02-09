@@ -1,6 +1,8 @@
 [Unit]
 Description=ddns-cpp
+After=network.target
 [Service]
 ExecStart=/usr/local/bin/ddns-cpp
+Restart=on-failure
 [Install]
 WantedBy=multi-user.target
