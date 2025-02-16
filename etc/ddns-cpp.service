@@ -4,5 +4,6 @@ After=network.target
 [Service]
 ExecStart=/usr/local/bin/ddns-cpp
 Restart=on-failure
+RestartSec=1s
 [Install]
 WantedBy=multi-user.target
