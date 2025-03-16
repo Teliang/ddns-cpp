@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STRUCT_H
+#define STRUCT_H
 #include <string>
 
 struct record {
@@ -8,7 +9,9 @@ struct record {
 };
 
 struct configure {
+  std::string ip_server_url;
   std::string domain;
   std::string api_key;
   int execute_fix_time;
 };
+#endif

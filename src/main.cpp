@@ -15,11 +15,12 @@ int main() {
   }
 
   while (true) {
-    std::string current_ip = get_current_ip();
+    std::string current_ip = get_current_ip(conf.ip_server_url);
     std::cout << "current_ip: " << current_ip << std::endl;
     std::vector<record> records = dns_list_records(conf);
     for (auto &&r : records) {
-      std::cout << "host: " << r.host << "ip: " << r.ip << std::endl;
+      std::cout << "DNS server configure, host: " << r.host << " ip: " << r.ip
+                << std::endl;
       if (r.ip != current_ip) {
         update_record(conf, r, current_ip);
       }

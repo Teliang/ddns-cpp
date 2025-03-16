@@ -42,6 +42,9 @@ configure read_configure() {
   if (json_conf.find("apiKey") != json_conf.end()) {
     conf.api_key = json_conf["apiKey"];
   }
+  if (json_conf.find("ipServerUrl") != json_conf.end()) {
+    conf.ip_server_url = json_conf["ipServerUrl"];
+  }
 
   if (json_conf.find("executeFixTime") != json_conf.end()) {
     conf.execute_fix_time = int(json_conf["executeFixTime"]) * 1000;

@@ -1,4 +1,5 @@
 {
+    "ipServerUrl":"http://server",
     "domain":"example.com",
     "apiKey":"**************",
     "executeFixTime":300
