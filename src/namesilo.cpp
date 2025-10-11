@@ -41,6 +41,7 @@ std::vector<record> dns_list_records(const configure &conf) {
     std::cout << "request error, body :" << std::endl;
     std::cout << res->body << std::endl;
   }
+
   auto json_reply = json_body["reply"];
   if (json_reply.find("resource_record") == json_reply.end()) {
     std::cout << "request error, body :" << std::endl;
@@ -57,7 +58,8 @@ std::vector<record> dns_list_records(const configure &conf) {
     } else {
       host = host.substr(0, host.find("."));
     }
-    vec.push_back({json_record["record_id"], host, json_record["value"]});
+    vec.push_back({json_record["record_id"], host, json_record["value"],
+                   json_record["type"]});
   }
   return vec;
 }

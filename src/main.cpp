@@ -21,6 +21,16 @@ int main() {
     for (auto &&r : records) {
       std::cout << "DNS server configure, host: " << r.host << " ip: " << r.ip
                 << std::endl;
+      if ("A" != r.type) {
+        std::cout << "record type is not A!" << std::endl;
+        continue;
+      }
+
+      if (conf.ignore_subdomains.find(r.host) != conf.ignore_subdomains.end()) {
+        std::cout << "ignore subdomain!" << std::endl;
+        continue;
+      }
+
       if (r.ip != current_ip) {
         update_record(conf, r, current_ip);
       }

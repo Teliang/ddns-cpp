@@ -52,5 +52,15 @@ configure read_configure() {
     conf.execute_fix_time = 300 * 1000;
   }
 
+  if (json_conf.find("ignoreSubdomains") != json_conf.end()) {
+    auto array = json_conf["ignoreSubdomains"];
+    conf.ignore_subdomains = {begin(array), end(array)};
+  }
+
+  std::cout << "ignore_subdomains: " << std::endl;
+  for (auto element : conf.ignore_subdomains) {
+    std::cout << element << " ";
+  }
+  std::cout << std::endl;
   return conf;
 }
