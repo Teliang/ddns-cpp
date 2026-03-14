@@ -31,6 +31,10 @@ std::vector<record> dns_list_records(const configure &conf) {
 
   auto res = cli.Get(path);
 
+  if (!res) {
+    return {};
+  }
+
   std::cout << "dns list record, response http code: " << res->status
             << std::endl;
   std::cout << res->body << std::endl;
@@ -84,9 +88,9 @@ void update_record(configure &conf, record &r, std::string &ip) {
   // HTTP
   httplib::Client cli(base_url);
 
-  auto res = cli.Get(path);
-
-  std::cout << "update record response: " << std::endl;
-  std::cout << res->status << std::endl;
-  std::cout << res->body << std::endl;
+  if (auto res = cli.Get(path)) {
+    std::cout << "update record response: " << std::endl;
+    std::cout << res->status << std::endl;
+    std::cout << res->body << std::endl;
+  }
 }
