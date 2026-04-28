@@ -1,7 +1,8 @@
 {
-    "ipServerUrl":"http://server",
     "domain":"example.com",
     "apiKey":"**************",
-    "executeFixTime":300
-    "ignoreSubdomains":["www","nextcloud"]
+    "executeFixTime":300,
+    "ignoreSubdomains":["www","nextcloud"],
+    "piholeUrl":"https://pihole",
+    "piholePassword":"**************"
 }

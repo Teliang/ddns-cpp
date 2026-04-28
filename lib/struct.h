@@ -12,6 +12,8 @@ struct record {
 
 struct configure {
   std::string ip_server_url;
+  std::string pihole_url;
+  std::string pihole_password;
   std::string domain;
   std::string api_key;
   int execute_fix_time;
