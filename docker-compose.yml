@@ -1,0 +1,9 @@
+services:
+  portal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ddns-cpp
+    restart: unless-stopped
+    volumes:
+      - ./ddns-cpp.json:/etc/ddns-cpp.json
