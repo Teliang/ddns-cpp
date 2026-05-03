@@ -6,6 +6,63 @@
 
 std::string base_url = "https://www.namesilo.com";
 
+std::vector<std::string> get_hosts(const configure &conf) {
+  std::string path = "/api/dnsListRecords?";
+
+  std::map<std::string, std::string> paramter;
+
+  paramter.insert({"version", "1"});
+  paramter.insert({"type", "json"});
+  paramter.insert({"key", conf.api_key});
+  paramter.insert({"domain", conf.domain});
+
+  for (auto &&pair : paramter) {
+    path.append(pair.first);
+    path.append("=");
+    path.append(pair.second);
+    path.append("&");
+  }
+
+  path.pop_back();
+
+  std::cout << "dns list record url: " << base_url << path << std::endl;
+  // HTTP
+  httplib::Client cli(base_url);
+
+  auto res = cli.Get(path);
+
+  if (!res) {
+    return {};
+  }
+
+  std::cout << "dns list record, response http code: " << res->status
+            << std::endl;
+  std::cout << res->body << std::endl;
+
+  auto json_body = nlohmann::json::parse(res->body);
+
+  if (json_body.find("reply") == json_body.end()) {
+    std::cout << "request error, body :" << std::endl;
+    std::cout << res->body << std::endl;
+  }
+
+  auto json_reply = json_body["reply"];
+  if (json_reply.find("resource_record") == json_reply.end()) {
+    std::cout << "request error, body :" << std::endl;
+    std::cout << res->body << std::endl;
+  }
+  auto json_records = json_reply["resource_record"];
+
+  std::vector<std::string> vec;
+  for (auto &&json_record : json_records) {
+    if ("A" != json_record["type"])
+      continue;
+    std::string host = json_record["host"];
+    vec.emplace_back(host);
+  }
+  return vec;
+}
+
 std::vector<record> dns_list_records(const configure &conf) {
   std::string path = "/api/dnsListRecords?";
 
