@@ -55,7 +55,7 @@ std::vector<std::string> get_hosts(const configure &conf) {
 
   std::vector<std::string> vec;
   for (auto &&json_record : json_records) {
-    if ("A" != json_record["type"])
+    if ("A" != json_record["type"] && "CNAME" != json_record["type"])
       continue;
     std::string host = json_record["host"];
     vec.emplace_back(host);
