@@ -54,6 +54,11 @@ void update_pihole(configure &conf, std::string &current_ip) {
   std::vector<std::string> remote_hosts = get_hosts(conf);
 
   std::string sid = auth(url, password);
+
+  if (sid.empty()) {
+    return;
+  }
+
   std::vector<std::tuple<std::string, std::string>> hosts =
       get_hosts_config(url, sid);
 
