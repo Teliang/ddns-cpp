@@ -29,15 +29,18 @@ int main(int argc, char *argv[]) {
     std::string current_ip = get_current_ip(conf.ip_server_url);
     std::cout << "current_ip: " << current_ip << std::endl;
 
-    if (!current_ip.empty()) {
+    if (current_ip.empty()) {
+      // sleep
+      std::this_thread::sleep_for(std::chrono::milliseconds(1 * 1000));
+    } else {
       update_pihole(conf, current_ip);
 
       update_namesilo(conf, current_ip);
-    }
 
-    // sleep
-    std::this_thread::sleep_for(
-        std::chrono::milliseconds(conf.execute_fix_time));
+      // sleep
+      std::this_thread::sleep_for(
+          std::chrono::milliseconds(conf.execute_fix_time));
+    }
   }
 
   return 0;
@@ -100,7 +103,7 @@ void update_pihole(configure &conf, std::string &current_ip) {
 void update_namesilo(configure &conf, std::string &current_ip) {
   std::vector<record> records = dns_list_records(conf);
   for (auto &&r : records) {
-    std::cout << "DNS server configure, host: " << r.host << " ip: " << r.ip
+    std::cout << "DNS server configure, host: " << r.host << " value: " << r.ip
               << std::endl;
     if ("A" != r.type) {
       std::cout << "record type is not A type!" << std::endl;

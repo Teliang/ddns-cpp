@@ -112,13 +112,7 @@ std::vector<record> dns_list_records(const configure &conf) {
 
   std::vector<record> vec;
   for (auto &&json_record : json_records) {
-    // abc.example.com -> abcに変える
     std::string host = json_record["host"];
-    if (host == conf.domain) {
-      host = "";
-    } else {
-      host = host.substr(0, host.find(conf.domain) - 1);
-    }
     vec.push_back({json_record["record_id"], host, json_record["value"],
                    json_record["type"]});
   }
