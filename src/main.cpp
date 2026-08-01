@@ -68,6 +68,12 @@ void update_pihole(configure &conf, std::string &current_ip) {
   bool should_update = false;
 
   for (const auto &remote_host : remote_hosts) {
+    if (conf.ignore_subdomains.find(remote_host) !=
+        conf.ignore_subdomains.end()) {
+      std::cout << "ignore subdomain!" << std::endl;
+      continue;
+    }
+
     std::string remote_domain;
     if (remote_host == "@") {
       remote_domain = conf.domain;
